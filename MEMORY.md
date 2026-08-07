@@ -1,4 +1,5 @@
 # Credit Risk Analysis System
+
 ## MEMORY.md
 
 ---
@@ -12,19 +13,19 @@ Project Type:
 Data Science Capstone Project
 
 Goal:
-Develop an end-to-end machine learning system capable of predicting loan default risk while providing explainable predictions and actionable recommendations through an interactive dashboard.
+Develop an end-to-end machine learning system capable of predicting loan default risk while providing explainable predictions and actionable recommendations through an interactive Streamlit dashboard.
 
 ---
 
 # Project Architecture
 
-The project follows a modular architecture.
+The project follows a modular, production-oriented architecture.
 
 ```
 Raw Data
       │
       ▼
-Preprocessing
+Data Preprocessing
       │
       ▼
 Exploratory Data Analysis
@@ -49,13 +50,16 @@ Prediction Module
       │
       ▼
 Dashboard
+      │
+      ▼
+Deployment
 ```
 
 Each module is implemented independently.
 
-Business logic remains inside the **src** directory.
+Business logic resides inside **src/**.
 
-Jupyter notebooks are only responsible for executing functions and documenting the workflow.
+Jupyter notebooks only execute functions and document the workflow.
 
 ---
 
@@ -64,9 +68,21 @@ Jupyter notebooks are only responsible for executing functions and documenting t
 ```
 dashboard/
 data/
+│
+├── raw/
+├── interim/
+├── processed/
+└── models/
+│
 deployment/
 notebooks/
 outputs/
+│
+├── figures/
+├── metrics/
+├── predictions/
+└── reports/
+│
 reports/
 src/
 tests/
@@ -76,16 +92,21 @@ tests/
 
 # Development Principles
 
-- Keep every module independent.
-- Avoid duplicate code.
-- Follow reusable function design.
-- Keep notebooks clean.
-- Store reusable logic inside src.
-- Every function should have a complete NumPy-style docstring.
-- Follow PEP-8 formatting.
-- Use descriptive variable names.
-- Avoid hardcoded values.
-- Configuration values belong in config.py or constants.py.
+- Modular software architecture
+- Low coupling, high cohesion
+- One responsibility per function
+- Reusable business logic
+- Notebook contains no reusable code
+- NumPy style docstrings
+- Type hints
+- PEP-8 formatting
+- Descriptive variable names
+- Configuration through config.py
+- Constants through constants.py
+- Return values instead of printing
+- Separate computation from visualization
+- Validate inputs before processing
+- Raise meaningful exceptions
 
 ---
 
@@ -93,23 +114,25 @@ tests/
 
 ## preprocessing.py
 
-Responsible for:
+Responsible for
 
-- Loading datasets
-- Validation
-- Duplicate handling
-- Missing value handling
-- Data cleaning
+- Dataset loading
+- Dataset validation
+- Duplicate detection
+- Duplicate removal
+- Missing value analysis
+- Missing value treatment
+- Dataset cleaning
 - Export cleaned dataset
 
 ---
 
 ## visualization.py
 
-Responsible for:
+Responsible for
 
 - Dataset overview
-- Target analysis
+- Target distribution
 - Numerical analysis
 - Categorical analysis
 - Correlation analysis
@@ -120,76 +143,109 @@ Responsible for:
 
 ## feature_engineering.py
 
-Responsible for:
+Responsible for
 
+### Validation
+
+- _validate_dataframe()
+- _validate_columns_exist()
+
+### Feature Discovery
+
+- get_numerical_columns()
+- get_categorical_columns()
+
+### Dataset Preparation
+
+- split_features_target()
+- split_dataset()
+
+### Preprocessing Pipeline
+
+- build_preprocessor()
+- fit_preprocessor()
+- transform_dataset()
+
+Responsible for
+
+- Feature identification
 - Feature selection
-- Encoding categorical variables
-- Scaling numerical variables
-- Feature transformation
-- Dataset splitting
-- Export processed datasets
+- Train / Validation / Test split
+- Numerical scaling
+- Categorical encoding
+- Building preprocessing pipeline
+- Fitting preprocessing pipeline
+- Transforming datasets into ML-ready format
 
 ---
 
 ## model_training.py
 
-Responsible for:
+Responsible for
 
-- Training machine learning models
+- Model creation
+- Model training
+- Cross validation
 - Hyperparameter tuning
-- Cross-validation
 - Model persistence
 
 ---
 
 ## evaluation.py
 
-Responsible for:
+Responsible for
 
-- Classification metrics
-- ROC Curve
-- Precision-Recall Curve
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- ROC-AUC
 - Confusion Matrix
-- Performance comparison
+- Classification Report
+- ROC Curve
+- Precision Recall Curve
+- Model comparison
 
 ---
 
 ## explainability.py
 
-Responsible for:
+Responsible for
 
 - Feature importance
-- SHAP analysis
-- Global explanations
-- Local explanations
+- Permutation importance
+- SHAP
+- Global explanation
+- Local explanation
 
 ---
 
 ## recommendation.py
 
-Responsible for:
+Responsible for
 
 - Risk recommendations
 - Customer suggestions
-- Loan decision assistance
+- Loan approval assistance
 
 ---
 
 ## prediction.py
 
-Responsible for:
+Responsible for
 
 - Load trained model
-- Accept new customer data
-- Return prediction
-- Return probability
+- Load preprocessing pipeline
+- Accept customer input
+- Predict default probability
+- Return recommendation
 - Return explanation
 
 ---
 
 ## utils.py
 
-Contains reusable helper functions shared across modules.
+Reusable helper functions shared across modules.
 
 ---
 
@@ -197,118 +253,198 @@ Contains reusable helper functions shared across modules.
 
 Always
 
-- Write modular functions.
-- Return objects instead of printing whenever possible.
-- Keep plotting and computation separate.
-- Validate function inputs.
-- Raise meaningful exceptions.
-- Use type hints.
-- Keep comments concise.
+- Small reusable functions
+- Single Responsibility Principle
+- Return objects instead of printing
+- Validate function inputs
+- Raise meaningful exceptions
+- Use type hints
+- NumPy docstrings
+- PEP-8 formatting
+- Keep plotting separate from computation
 
 Avoid
 
+- Hardcoded values
+- Hardcoded paths
+- Duplicate code
+- Business logic inside notebooks
+- Large notebook cells
 - Global variables
 - Magic numbers
-- Repeated logic
-- Long notebook cells
-- Mixing preprocessing with visualization
 
 ---
 
 # Current Progress
 
 ## Module 1
-Status: Completed
 
-Completed:
+Status:
+Completed
+
+Completed
 
 - Dataset loading
-- Validation
+- Dataset validation
 - Duplicate removal
 - Missing value treatment
-- Clean dataset export
+- Dataset cleaning
+- Export cleaned dataset
 
 ---
 
 ## Module 2
-Status: Completed
 
-Completed:
+Status:
+Completed
+
+Completed
 
 - Dataset overview
-- Target analysis
+- Target distribution
 - Numerical analysis
 - Categorical analysis
 - Correlation analysis
 - Outlier analysis
+- Feature vs Target analysis
+- Outlier detection
 
 ---
 
 ## Module 3
-Status: Ready to Begin
 
-Next Tasks
+Status:
+Completed
 
-- Feature selection
-- Feature encoding
-- Feature scaling
-- Train/Validation/Test split
-- Export processed datasets
+Completed
+
+### Validation
+
+- _validate_dataframe()
+- _validate_columns_exist()
+
+### Feature Discovery
+
+- Numerical column identification
+- Categorical column identification
+
+### Dataset Preparation
+
+- Feature / Target separation
+- Stratified Train / Validation / Test split
+
+### Feature Engineering
+
+- StandardScaler
+- OneHotEncoder
+- ColumnTransformer
+- Pipeline construction
+- Pipeline fitting
+- Dataset transformation
+
+### Verification
+
+- Processed dataset validation
+- Feature name preservation
+- DataFrame output
+- Original index preservation
+- Target distribution verification
+
+---
+
+## Module 4
+
+Status:
+Ready to Begin
+
+Planned Tasks
+
+- Build Logistic Regression
+- Build Decision Tree
+- Build Random Forest
+- Generic model training function
+- Prediction function
+- Probability prediction
+- Cross validation
+- Hyperparameter tuning
+- Best model selection
 
 ---
 
 # Machine Learning Pipeline
 
 ```
-Raw Data
-    ↓
+Raw Dataset
+      │
+      ▼
 Cleaning
-    ↓
+      │
+      ▼
 EDA
-    ↓
+      │
+      ▼
 Feature Engineering
-    ↓
-Training
-    ↓
-Evaluation
-    ↓
+      │
+      ▼
+Preprocessing Pipeline
+      │
+      ▼
+Model Training
+      │
+      ▼
+Model Evaluation
+      │
+      ▼
 Explainability
-    ↓
-Recommendation
-    ↓
+      │
+      ▼
+Recommendation Engine
+      │
+      ▼
 Prediction
+      │
+      ▼
+Dashboard
 ```
 
 ---
 
 # Important Rules
 
-- Never edit raw datasets.
-- Always save intermediate datasets.
-- Save trained models inside data/models.
-- Save processed datasets inside data/processed.
-- Save figures inside outputs/figures.
-- Save reports inside outputs/reports.
-- Keep notebooks reproducible from the first cell.
-- Restart kernel and run all before committing changes.
+- Never modify raw datasets.
+- Store cleaned datasets inside data/interim.
+- Store processed datasets inside data/processed.
+- Store trained models inside data/models.
+- Store figures inside outputs/figures.
+- Store reports inside outputs/reports.
+- Keep notebooks reproducible.
+- Restart kernel and Run All before committing.
+- Maintain modular architecture.
+- Every notebook should only demonstrate usage.
 
 ---
 
 # Git Workflow
 
-Before every commit:
+Before every commit
 
-- Run all notebook cells.
-- Verify outputs.
-- Remove temporary debugging code.
-- Update MEMORY.md if architecture changes.
-- Push only clean and reproducible code.
+- Run all notebook cells
+- Verify outputs
+- Remove debugging code
+- Verify folder structure
+- Update MEMORY.md if architecture changes
+- Commit clean reproducible code
 
 ---
 
-Last Updated
+# Last Updated
 
-Module 2 (Exploratory Data Analysis) Completed.
+Modules Completed
 
-Next Module:
-Feature Engineering
+- ✅ Module 1 — Data Preprocessing
+- ✅ Module 2 — Exploratory Data Analysis
+- ✅ Module 3 — Feature Engineering
+
+Next Module
+
+➡ Module 4 — Model Training
