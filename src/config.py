@@ -59,6 +59,8 @@ TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "train.csv"
 VALIDATION_DATA_PATH = PROCESSED_DATA_DIR / "validation.csv"
 TEST_DATA_PATH = PROCESSED_DATA_DIR / "test.csv"
 
+TRAINING_ARTIFACTS_PATH = PROCESSED_DATA_DIR / "training_artifacts.pkl"
+
 # =============================================================================
 # Model Artifact Paths
 # =============================================================================
